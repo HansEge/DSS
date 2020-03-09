@@ -1,0 +1,49 @@
+\documentclass{report}
+
+\input{Config}
+
+\begin{document}\thispagestyle{empty}
+
+%-----------------------------------------------
+%	PROJECT INFORMATION
+%-----------------------------------------------
+
+\def \institution{Aarhus University}
+\def \subject{Decision Support Systems}
+\def \title {Project Report}
+\def \author{Lasse Lildholdt \\ (201507170) \\ Stinus Skovgaard \\ (201507170) \\ Daniel Tøttrup \\ (201507170) \\ Johan Vasegaard \\ (201507170) \\ Frederik Madsen \\ (201507170)}
+\def \supervisor{Christian Fischer Pedersen}
+
+%-----------------------------------------------
+%	PRE-CONTENT
+%-----------------------------------------------
+
+\include{Pre-content/Title-page-std}
+\include{Pre-content/Contents}
+
+%-----------------------------------------------
+%	CHAPTERS
+%-----------------------------------------------
+
+\pagenumbering{arabic}
+\include{Chapters/0_introduction/0_introduction}
+\include{Chapters/1_linear_regression/1_linear_regression}
+\include{Chapters/2_logistic_regression/2_logistic_regression}
+\include{Chapters/3_cross_validation/3_cross_validation}
+\include{Chapters/4_subset_selection/4_subset_selection}
+\include{Chapters/5_shrinkage_methods/5_shrinkage_methods}
+
+
+%-----------------------------------------------
+%	APPENDICES
+%-----------------------------------------------
+
+
+%-----------------------------------------------
+%	POST-CONTENT
+%-----------------------------------------------
+
+%\bibliographystyle{unsrt}
+%\bibliography{Bibliography}
+
+\end{document}

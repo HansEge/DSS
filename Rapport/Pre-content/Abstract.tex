@@ -1,0 +1,16 @@
+% Abstract
+\chapter*{Abstract} % Abstract name
+
+Kamstrup A/S is a globalized company specialized in delivering smart meter solutions to track consumption of heat, cooling and water. The term “smart meter solutions” covers, among other things, the fact that all consumption data is transmitted from the meter itself to a collection point. This transmission is performed wirelessly and serves as basis for this project.
+
+Wireless protocols undergo constantly development in the Wireless department of Kampstrup A/S. In recent years, several new protocols have been released, and the most recent one is named IOT4M. The intention of this project is to create a test tool which can support the development of IOT4M. IOT4M uses software defined radio (SDR) to detect radio signals which means that all processing of the incoming signals is handled in the software. The protocol defines several factors on the modulation of radio transmitted signals, which will be the basis for the Kamstrup Multichannel Receiver (KMR) system.
+
+The KMR system will be used for detection purposes, in collaboration with meters endowed with the new IOT4M protocol. When meters are transmitting data, the KMR system should be able to sample the meter signals and by using SDR principles, collect the information transmitted. This information will be written to a database, and later presented on a webpage. This setup will make the KMR system, a solid tool for debugging of the new meter protocol implementation. 
+
+The system consists of four subsystems: Sampling, Processing, Storage and Presentation, which are allocated on two different platforms. The Sampling subsystem is responsible for using a RTL-SDR device to sample radio signals based on user defined inputs and the Processing subsystem is responsible for collecting the concrete information from the sampled signals. Both subsystems are allocated on a Windows 10 PC. The Storage subsystem handles the external database and the interfacing against it, while the Presentation subsystem handles the visualization of data. The system exists in a distributed context. Hosting of the Storage and Presentation subsystems are handled server side which means clients can access available data using a web-based interface.
+
+The outcome of the project is a functional system, which is able to detect meter signals and collect information from these types of signals. Furthermore, the information can be stored successfully and presented in an informative manner on a webpage. However, due to the lack of a functional meter prototype, it has not been possible to validate the KMR system in the intended environment. Instead simulated meter signals have been created and used as inputs for the tests of the system.
+
+The implementation of the decoding embedded in the protocol has been out of scope from the beginning of the project. The protocol uses Forward Error Correction (FEC) coding which enhances the performance of the protocol. The KMR system is validated to follow the requirement of successfully demodulation at a SNR value of 9 dB, while the sensitivity of the system would be affected of the lack of decoding.
+
+A natural extension of this project would be to implement a decoding scheme and analyze how this will affect the performance.  
