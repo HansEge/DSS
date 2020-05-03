@@ -2,5 +2,37 @@
 \graphicspath{{Chapters/Indledning/}}
 %-------------------------------------------------------------------------------
 
-\chapter{Shrinkage methods / DImension reduction methods }
+\chapter{Shrinkage And Dimension Reduction Methods }
+Contrary to subset selection methods, which uses least squares to fit a linear model containing a subset with \emph{n} of all \emph{p} predictors, shrinkage methods fits a model containing all \emph{p} predictors. This is done by a penalty that regularizes the coefficient estimates and thereby shrinks them towards zero. By shrinking the coefficient estimates their variance can be significantly reduced. In this section the two shrinkage methods Ridge regression and The Lasso will be covered.\\
+Both shrinking methods tries to control variance by either using a subset of the original variables or by shrinking their coefficients towards zero and uses all of the original predictors. Another class of approaches, dimension reduction, is one that transforms the predictors first and then fits a least squares model using the transformed predictors. The reduction comes from the fact that the methods reduces the problem of estimating \(p+1\) coefficients to estimating \(M+1\) where \(M < p\). In this section the two dimension reduction methods Principal Component Regression and Partial Least Squares will be covered.
 
+
+\section{Ridge regression}
+Ridge regression is very similar to least square fitting in that it seeks to minimize RSS, but it adds a second term called the shrinkage penalty.\\ 
+The equation \ref{ridge_regression_eq} shows the full equation for ridge regression. Here the first term is the RSS where \(\beta_0,...,\beta_p\) is to be estimated such that it is minimized, but the second term introduces a penalty to \(\beta_j\) which effectively shrinks it towards zero. This penalty is scaled with \(\lambda\) such that as it moves towards zero, the penalty moves towards zero and the equation produces the least squares estimates. Moving the tuning parameter towards infinity will in turn drive the coefficient estimates towards zero.\\ 
+Thus ridge regression will produce a different set of coefficient estimates, \(\hat{\beta}_{\lambda}^{R}\), for each value of \(\lambda\) hence making it a tuning parameter. It is then critical to choose a good value for \(\lambda\), which can be done e.g. by the cross-validation method.
+
+\begin{equation}
+\sum_{i=1}^{n}(y_i - \beta_0 - \sum_{j=1}^{p}\beta_jx_ij)^2 + \lambda\sum_{j=1}^{p}\beta_{j}^{2}\label{ridge_regression_eq}
+\end{equation}
+
+The advantage of ridge regression over standard least squares comes from the bias-variance trade-off. By increasing the value of \(\lambda\) and thereby the effect of the penalty term, it is possible to decrease the variance of the predictor however the bias increases. As the test MSE (mean squared error) is a function of the variance plus the squared bias, finding a \(\lambda\) value which decreases the variance more than it increases the bias can result in a lower test MSE. Thus ridge regression will be superior whenever the least squares estimates have high variance.
+
+\section{The Lasso}
+The Lasso improves upon a disadvantage of ridge regression, namely that it includes all \emph{p} predictors in the final model, because it only reduces the magnitudes of the coefficients but never actually excludes any of them. Where ridge regression uses the \(\ell_2\)-norm in its regularization term (equation \ref{ridge_regression_eq}) , the Lasso uses \(\ell_1\)-norm (equation \ref{the_lasso_eq}). This has the effect of forcing some of the coefficients to be zero, depending on te value of \(\lambda\), instead of only driving them towards zero. Therefore the Lasso acts like subset selection, as it effectively performs variable selection yielding a sparse model which exactly is its improvement over ridge regression.\\
+Selecting a good value for \(\lambda\) is critical just as it is for ridge regression and can be done by cross-validation.
+
+\begin{equation}
+\sum_{i=1}^{n}(y_i - \beta_0 - \sum_{j=1}^{p}\beta_jx_ij)^2 + \lambda\sum_{j=1}^{p}|\beta_{j}|\label{the_lasso_eq}
+\end{equation}
+
+
+\section{Principal Component Regression}
+As with all dimension reduction methods Principal Component Regression (PCR) works in two steps: first transformed predictors are obtained and then a model is fit using the transformed predictors.\\
+The underlying method for obtaining the transformed predictors is in this case PCA (Principal Component Analysis).
+PCA derives a low-dimensional set of features from a large set of variables by acquiring basis vectors, \emph{principal components}, that forms an orthogonal basis. This is done by finding vectors with values that minimizes the sum of squared perpendicular distances between each point and the vector. Finding the next principal component is done as a linear combination of the variables that is uncorrelated with the principal component before it and has the largest variance. Up to \(M <= p\) principal components can be constructed this way, with \emph{p} being the number of predictors. By this construction the first principal component will contain the most information of the data-set with each following principal component containing less and less information.\\
+Fitting a least square model to \(Z_1,...,Z_M\) principal components instead of \(X_1,...,X_p\) data points with \(p << M\), can in theory lead to better results as it can mitigate overfitting. This stems from the notion that most or all of the information in the data relating to the response if contained in the \(Z_1,...,Z_M\) principal component. If however \(p == M\) PCR will perform the same as doing least square fitting on all of the original predictors.\\
+In PCR the number of principal components \emph{M} used for least square fitting becomes a hyper parameter that needs to be chosen carefully. This is typically done using the cross-validation method.
+
+
+\section{Partial Least Squares}
