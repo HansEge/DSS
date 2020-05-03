@@ -36,3 +36,14 @@ In PCR the number of principal components \emph{M} used for least square fitting
 
 
 \section{Partial Least Squares}
+In PCR the M principal components is guaranteed to best explain the predictors, however they are not guaranteed to best explain the response. This is due to the unsupervised nature of PCR, where the response does not supervise the identification of the transformed features (principal components).\\
+Unlike PCR, Partial Least Squares (PLS) is supervised in the sense that the response is used to identify the transformed features that not only approximates the original predictors but also relates to the response.\\
+PLS first identifies a new set of features \(Z_1,...,Z_M\) that represents \(M < p\) linear combinations of the original \emph{p} predictors. This is done by standardizing the \emph{p} predictors and calculated as in equation \ref{linear_combination_eq}.
+
+\begin{equation}
+Z_m = \sum_{j=1}^{p}\phi_{jm}X_j\label{linear_combination_eq}
+\end{equation}
+
+\begin{equation}
+y_i = \theta_0 + \sum_{m=1}^{M}\theta_{m}Z_{im} + \epsilon_i\label{transformed_linear_regression_eq}
+\end{equation}
