@@ -68,6 +68,7 @@ This means that to get to a final method we need to minimize RSS. Some calculus 
 
 This method of estimating the constants have been used on \cref*{fig:TV_linear_reg}. How this is done can be seen on the code snippet below.
 
+
 \begin{lstlisting}[language=Python]
 x_mean = get_mean(x_data)
 y_mean = get_mean(y_data)
@@ -160,4 +161,84 @@ for (i, j), v in np.ndenumerate(Z):
 Z[i, j] = (regr.intercept_ + B1[i, j] * regr.coef_[0] + B2[i, j] * regr.coef_[1])
 \end{lstlisting}
 
+
+\newpage
+
+\section{Lab results}
+\subsection{Lab 3.6.2}
+The data used in this lab exercise is from the MASS library which contains housing data in the Boston area. First a linear regression model will be applied on the "medv" and "lstat. \textbf{medv} as response (y) and \textbf{lstat} as the predictor. The code snippet below shows how $\beta_0$ and $\beta_1$ is estimated. This linear model is plotted on the \cref{fig:lab1_plot}.
+
+\begin{lstlisting}[language=Python]
+x_mean = get_mean(x_data)
+y_mean = get_mean(y_data)
+
+num = 0
+den = 0
+
+for i in range(len(x_data)):
+num += (x_data[i]-x_mean)*(y_data[i]-y_mean)
+den += (x_data[i] - x_mean) ** 2
+
+b1_hat = num/den
+b0_hat = y_mean-b1_hat*x_mean
+
+return b0_hat, b1_hat
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Img/lab1_plot.PNG}
+	\caption{Plot of data and regression line}
+	\label{fig:lab1_plot}
+\end{figure} 
+
+To get a more detailed look at the different statistical properties, the following code is executed and the use of sklearns LinearRegression module is used.
+
+\begin{lstlisting}[language=Python]
+regr = skl_lm.LinearRegression()
+regr.fit(X,y)
+
+params = np.append(regr.intercept_, regr.coef_)
+predictions = regr.predict(X)
+
+newX = pd.DataFrame({"Constant": np.ones(len(X))}).join(pd.DataFrame(X))
+MSE = (sum((y - predictions) ** 2)) / (len(newX) - len(newX.columns))
+
+var_b = MSE * (np.linalg.inv(np.dot(newX.T, newX)).diagonal())
+sd_b = np.sqrt(var_b)
+ts_b = params / sd_b
+
+p_values = [2 * (1 - stats.t.cdf(np.abs(i), (len(newX) - 1))) for i in ts_b]
+
+sd_b = np.round(sd_b, 3)
+ts_b = np.round(ts_b, 3)
+p_values = np.round(p_values, 3)
+params = np.round(params, 4)
+
+myDF3 = pd.DataFrame()
+myDF3["Coefficients"], myDF3["Standard Errors"], myDF3["t values"], myDF3["Probabilities"] = [params, sd_b, ts_b,
+p_values]
+print(myDF3)
+\end{lstlisting}
+
+This code will output the following:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Img/lab1_output.PNG}
+	\caption{Properties of regression line}
+	\label{fig:lab1_1}
+\end{figure} 
+
+
+
+\subsection{Lab 3.6.3}
+Now we want to fit multiple predictor variables using the multiple linear regression method. This is also done using Sklearn LinearRegression module. The statistical properties when using all 13 predictor variables can be seen on \cref{fig:lab1_2}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Img/lab12_output.PNG}
+	\caption{Properties of multiple regression line}
+	\label{fig:lab1_2}
+\end{figure} 
 
