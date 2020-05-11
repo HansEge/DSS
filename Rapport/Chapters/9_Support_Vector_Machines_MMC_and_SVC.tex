@@ -44,3 +44,32 @@ $$\underset{\beta_0 ,\beta_1 ,...,\beta_p}{\text{Maximize M}}$$
 $$subject\: to\:\sum\limits_{j=1}^{p} \beta_j^2 = 1$$
 
 $$y_i(\beta_0 + \beta_1 x_i1 + \beta_2 x_i2 + ... + \beta_p x_ip)  \geq  M\: \forall\: i=1,...,n$$
+
+\section{Support Vector Classifier}
+The maximal margin classifier is a natural way to perform classification, but it has its drawback. As already explained often no separation hyperplane exists, and so there is no maximal margin classifier. This leads us an extension of maximal margin classifier also called Support Vector Classifier.  
+The support vector classifier introduces something called “soft margin”. A soft margin, does not seek the largest possible margin so every observation is on the correct side of the margin and hyperplane. Instead it allows some observations to be on the incorrect side of the margin, or even incorrect side of the hyperplane. This is also very useful when you have a lot of noisy data, because then one observation can change the separating hyperplane drastically and often not for the better.  
+This actually has to be the case when there doesn’t exist a hyperplane that perfectly separates the observations. 
+
+The Support Vector Classifier classifies a test observation like the Maximum Margin Classifier, on which side of the hyperplane it lies. But instead, of perfectly separate all training data, the Support Vector Classifier classifies most of the training data into the correct classes and may misclassify a few of the training data observations. The solution to this problem can be written as follows: 
+
+$$\underset{\beta_0 ,\beta_1 ,...,\beta_p, \epsilon_1,...,\epsilon_n}{\text{Maximize M}}$$
+
+$$subject\: to\:\sum\limits_{j=1}^{p} \beta_j^2 = 1$$
+
+$$y_i(\beta_0 + \beta_1 x_i1 + \beta_2 x_i2 + ... + \beta_p x_ip)  \geq  M(1-\epsilon_i)$$
+
+$$\epsilon_i \geq, \sum_{i=1}^{n}\epsilon_i \leq C$$
+
+Where C is a nonnegative tuning parameter. As before M is the width of the margin. The new parameter $\epsilon $ are a slack variable, that allow individual observations to be on the wrong side of the hyperplane. We still classify test observations based on the sign of $f(x^*) = \beta_0 + \beta_1 x_1^* + \beta_2 x_2^* + ... + \beta_p x_p^*$. \\
+The slack variable $\epsilon_i $ tells where the \textit{i}th observation is located relative to the hyperplane and margin. If $\epsilon_i = 0$ then the observation is on the correct side of the margin. If $\epsilon_i > 0$ then its on the wrong side of the margin, and if $\epsilon_i > 1$ then its on the wrong side of the hyperplane. 
+
+C is treated as a tuning parameter, that controls the bias-variance trade-off. When C is small, we seek narrow margins that are rarely violated, which may have low bias but high variance. If C is large, the margin is wider and allow more violations; this amount to fitting the data less hard which potentially gives more bias but may have lower variance. 
+
+An example of different C values can be seen from Lab 9.6.1 (The source code can be seen in the appendix). In this Lab exercise 20 random training values has been generated and 10 of them was assigned with the value 1 and 10 with the value -1. We then applied the support vector classifier on the data with the C value of 1 and 0.1, and then plotted the results. On \cref{fig:SVC_C_values} it is clear that the hyperplane and the margin changes with the value of C. As explained the smaller the C value is the wider is the margin. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Img/SVC_C_values.PNG}
+	\caption{Lab 9.6.1 result of different C values}
+	\label{fig:SVC_C_values}
+\end{figure} 
