@@ -138,7 +138,7 @@ When using two predictor variables the regression line becomes a plane. On \cref
 The code for making the regression plane is listed below:
 
 \begin{lstlisting}
- # Multiple Regression
+# Multiple Regression
 regr = skl_lm.LinearRegression()
 
 X = advertising[['Radio', 'TV']].values
@@ -147,8 +147,10 @@ y = advertising.Sales
 # Fitting data to estimate constants.
 regr.fit(X, y)
 
+# Make it so that the plane fits all points
 Radio = np.arange(0, 50)
 TV = np.arange(0, 300)
+
 
 B1, B2 = np.meshgrid(Radio, TV, indexing='xy')
 Z = np.zeros((TV.size, Radio.size))
