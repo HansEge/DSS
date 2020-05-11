@@ -7,7 +7,7 @@ In this chapter we’ll discuss the subject Support Vector Machines (SVM). SVM p
 Maximal Margin Classifier is the simplest of different type of SVM. It tries to find a plane that separates the classes in the feature space. When we talk about a plane to separate the classes, we talk about a hyperplane. 
 
 A hyperplane in \textit{p} dimensions is a flat affine subspace of dimensions \textit{p}-1. If we’ll look at two dimensions, a hyperplane would be a one-dimensional subspace. If we look at \textit{p} > 3 dimensions, it can be hard to visualize the hyperplane. \\
-A hyper plane has the form in p-dimensional settings: 
+A hyper plane has the form in p-dimensional settings \cite{book_2015}: 
 \begin{equation}
 \beta_0 + \beta_1 X_1 + \beta_2 X_2 +...+ \beta_p X_p = 0\label{eq:hyperplane}
 \end{equation}
@@ -38,7 +38,7 @@ So, the aim is to generate a hyperplane that has the largest margin on the train
 	\caption{Hyperplane maximum margin}
 	\label{fig:Hyperplane_margin}
 \end{figure} 
-The maximum hyperplane can be solved as follows: 
+The maximum hyperplane can be solved as follows\cite{book_2015}: 
 $$\underset{\beta_0 ,\beta_1 ,...,\beta_p}{\text{Maximize M}}$$
 
 $$subject\: to\:\sum\limits_{j=1}^{p} \beta_j^2 = 1$$
