@@ -26,7 +26,7 @@ $$\{Flu,\ Rabies,\ Ebola,\ Common\ cold\}$$
 
 Implies a completely different relationship between the conditions. Each separate coding would produce different linear models, each leading to a different set of predictions.
 
-Another problem with using Linear regression, cab be seen by applying it to the data set \texttt{Default}, the result of which can be seen on \cref{fig:LinReg_vs_LogReg}
+Another problem with using Linear regression, cab be seen by applying it to the data set \textit{Default}, the result of which can be seen on \cref{fig:LinReg_vs_LogReg}
 
 \begin{figure}[H]
 	\fbox{\includegraphics[width=350pt]{Img/LinReg_vs_LogReg}}
@@ -57,7 +57,27 @@ p(X)=\frac{e^{\beta_0 + \beta_1 X}}{1+e^{\beta_0 + \beta_1 X}}
 \end{split}
 \end{equation}
 
+After some rearranging, the following transformation equation is found (see \cref{eq:LogReg_TransformFunc}). This transformation is also called the \textit{log odds} or \textit{logit} transformation of $p(X)$.
 
+\begin{equation} \label{eq:LogReg_TransformFunc}
+\begin{split}
+\log{\Bigl(\frac{p(X)}{1-p(X)}\Bigr)}= \beta_0+ \beta_1 X
+\end{split}
+\end{equation}
+
+We now have a linear model, that is able to model probabilities on a non-linear scale.\\
+The next step is to estimate the coefficients $\beta_0$ and $\beta_1$, this is done based on available training data.
+
+In order to do this, we use maximum likelihood. This likelihood gives us the probability of observed zeros and ones in our data. We then pick $\beta_0$ and $\beta_1$ to maximize the likelihood of the observed data. The formula for this \textit{likelihood function} can be seen on \cref{fig:maximum_likelihood}
+
+\begin{figure}[H]
+	\fbox{\includegraphics[width=300pt]{Img/Maximum_likelihood}}
+	\centering
+	\caption{Likelihood function}
+	\label{fig:maximum_likelihood}
+\end{figure}
+
+Once the coefficients have been estimated, it is a simple to calculate the probability of \textit{default} for any given credit card balance.
 
 \section{Linear discriminant analysis}
 
