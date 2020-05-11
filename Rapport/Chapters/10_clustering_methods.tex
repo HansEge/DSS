@@ -21,15 +21,15 @@ This works by minimizing the squared euclidean distance to each mean-vector.
 minimize_{C1...C_{K}}\{\sum_{k=1}^{K}\dfrac{1}{\lvert C_{k} \rvert} \sum_{i,i'\in C_{k}}^{} \sum_{j=1}^{p}(x_{ij}-x_{i'j})^{2} \}
 \end{equation}
 
-$\lvert C_{k}\rvert$ denotes the number of samples in the kth cluster. Or the within variation of the kth cluster which is the sum of all the pairwise squared euclidean distances between the observations in the kth cluster, divided by the total number of samples in kth cluster.
+$\lvert C_{k}\rvert$ denotes the number of samples in the kth cluster. Or the within variation of the kth cluster which is the sum of all the pairwise squared euclidean distances between the samples in the kth cluster, divided by the total number of samples in kth cluster.
 
-To implement this as an algorithm the book covers how this should be done. 
+To implement this as an algorithm the book \cite{book_2015} covers how this should be done. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{Img/Algo_kmeans.PNG}
 	\caption{K-means clustering pseudo code}
-	\label{fig:k-Algo_kmeans.PNG}
+	\label{fig:k-Algo_kmeans}
 \end{figure} 
 
 In action this algorithm performs well and can be seen on \cref{Algo_kmeans_inaction}
@@ -43,3 +43,19 @@ In action this algorithm performs well and can be seen on \cref{Algo_kmeans_inac
 
 
 \subsection{Hierarchical Clustering}
+Hierarchical Clustering makes use of tree-based representation of the samples. This tree-based representation is called a Dendrogram and looks like an upside-down tree. An example of a dendrogram can be seen on \cref{fig:dendrogram}\cite{book_2015}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{Img/Dendrogram_example.PNG}
+	\caption{Dendrogram example}
+	\label{fig:dendrogram}
+\end{figure} 
+
+Its easy to see how the clustering works. It starts from the bottom works its way up. To see if two samples are similar we can compare how far up on the vertical axis two samples fuses. If they fuse at the bottom they are very similar and at to top not very similar. 
+
+A hierarchical clustering algorithm will work like the dendrogram. That means that if we have \textit{n} sample, it will also starts at the bottom and look at the two samples that are most similar and fuses them together so we have n-1 clusters. Next it will again fuse the two most similar samples and will be left with n-2 clusters. The algorithm will keep going until all samples belong to a cluster. 
+ 
+
+
+
