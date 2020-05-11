@@ -1,6 +1,6 @@
 %!TEX root = ../../Main.tex
 %!TeX spellcheck = en_US
-\graphicspath{{Chapters/Indledning/}}
+\graphicspath{{Chapters/2_logistic_regression/}}
 %-------------------------------------------------------------------------------
 
 \chapter{Classification}
@@ -15,9 +15,36 @@ Linear regression can be a very useful tool in field of supervised learning, how
 
 Why is linearly regression ill suited for cases involving a qualitative responds?
 
+For an example of this, let us consider the case that we are trying to predict which disease a hospital patient has, based on his symptoms. One (simplified) way of encoding this could be
 
-\subsection{Maximum likelihood}
+$$\{Rabies,\ Flu,\ Common\ cold,\ Ebola\}$$
 
-\subsection{Predicting}
+However doing this, implies an ordering of the conditions, as well as implying that the the difference between $Flu$ and $Common cold$ is the same as the difference between $Common cold$ and $Ebola$.\\
+Furthermore simply changing the ordering of this coding, such as to 
+
+$$\{Flu,\ Rabies,\ Ebola,\ Common\ cold\}$$ Implies a completely different relationship between the conditions. Each separate coding would produce different linear models, each leading to a different set of predictions.
+
+Another problem with using Linear regression, cab be seen by applying it to the data set \texttt{Default}, the result of which can be seen on \cref{fig:LinReg_vs_LogReg}
+
+\begin{figure}[H]
+	\fbox{\includegraphics[width=0.9\textwidth]{Img/LinReg_vs_LogReg}}
+	\centering
+	\caption{Classification of \texttt{Default} data. Left using linear regression to estimate probability, Right using logistic regression (Source: ISLR book\cite{book_2015} used in DSS course)}
+	\label{fig:LinReg_vs_LogReg}
+\end{figure}
+
+Here we see that this model estimates some probabilities to be less than 0, which is impossible. However we can see the Logistic regression is a much better fit, offering only values between 0 and 1, as well as simply fitting the data more accurately.
+
+\subsection{The logistic model}
+
+In linear regression, we can use the model shown on \cref{eq:LogReg_Linear_Regression_eq} to represent probabilities.
+
+\begin{equation} \label{eq:LogReg_Linear_Regression_eq}
+\begin{split}
+p(X) & = \beta_0 + \beta_1 X
+\end{split}
+\end{equation} 
+
+However taking this approach
 
 \section{Linear discriminant analysis}
