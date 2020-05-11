@@ -8,7 +8,7 @@ The simple Linear Regression approach is a quick and simple method for predictin
 
 \begin{equation} \label{eq:Linear_Regression_eq}
 	\begin{split}
-		Y & \approx \beta_0 + \beta_1 * X
+		Y & \approx \beta_0 + \beta_1 X
 	\end{split}
 \end{equation} 
 
@@ -16,7 +16,7 @@ The simple Linear Regression approach is a quick and simple method for predictin
 
 \begin{equation} \label{eq:Linear_Regression_eq_sales}
 \begin{split}
-sales & \approx \beta_0 + \beta_1 * TV
+sales & \approx \beta_0 + \beta_1 TV
 \end{split}
 \end{equation} 
 
@@ -87,8 +87,20 @@ return b0_hat, b1_hat
 
 $\beta_0$ and $\beta_1$ is estimated to 7.03 and 0.04 respectively for the TV advertisement data.
 
+There will always be an error of some sort when estimating this linear model. Because of this we can add a error constant to \cref{eq:Linear_Regression_eq}. The error constant (epsilon) is generated based on a gaussian distribution with a mean of 0. The equation will look as the following:
+
+\begin{equation} \label{eq:linear_reg_e}
+\begin{split}
+Y & \approx \beta_0 + \beta_1 X + \epsilon
+\end{split}
+\end{equation} 
+
 \section{Multiple linear regression}
-Simple linear regression is a great to see the response of a single predictor variable. However there are times where it would be beneficial to have multiple predictor variables. In the advertisement data we have three predictor variables; TV, Radio and Newspaper. We can define this as the following:
+Simple linear regression is a great to see the response of a single predictor variable. However there are times where it would be beneficial to have multiple predictor variables. Instead of having only a 1-dimensional regression line we can with multiple linear regression have a many-dimensional regression line (plane for 2D, cloud for 3D).
+
+In simple linear regression we had an intercept constant, $\beta_0$ and a slope constant $\beta_1$. In this model we essentially have the same plus some extra slope constant and predictor variables. This can be seen on \cref{eq:Multiple_lin_reg}.
+
+
 
 \begin{equation} \label{eq:Multiple_lin_reg}
 \begin{split}
@@ -105,7 +117,7 @@ If we fit this equation to out advertisement example we would get:
 \end{equation}
 
 \subsection{Estimating the regression constants}
-To estimate the constants we do same as in the simple regression method with some changes. We still try to minimize the RSS value, but since there are more constants the RSS value is calculated the following way:
+To estimate the constants we do same as in the simple regression method with some changes. We still try to minimize the RSS value, but since there are more constants the RSS value is calculated with the equation \cref{eq:RSS_multi_extended}. However to estimate the constants itself the use of a python package has been used. Sklearn has a regression module that can estimate our constants. This can be seen in the codes snippet further down in this chapter.
 
 \begin{equation} \label{eq:RSS_multi_extended}
 \begin{split}
@@ -132,6 +144,7 @@ regr = skl_lm.LinearRegression()
 X = advertising[['Radio', 'TV']].values
 y = advertising.Sales
 
+# Fitting data to estimate constants.
 regr.fit(X, y)
 
 Radio = np.arange(0, 50)
