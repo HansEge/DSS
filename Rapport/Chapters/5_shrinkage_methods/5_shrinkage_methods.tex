@@ -47,3 +47,51 @@ Z_m = \sum_{j=1}^{p}\phi_{jm}X_j\label{linear_combination_eq}
 \begin{equation}
 y_i = \theta_0 + \sum_{m=1}^{M}\theta_{m}Z_{im} + \epsilon_i\label{transformed_linear_regression_eq}
 \end{equation}
+
+\section{Lab results}
+
+Principal Component Regression(PCR) and Partial Least Squares(PLS) has been applied on the data set "Hitters" to predict salary as in exercise 6.7.1 and 6.7.2 in the course book. This has been done by finding the number of components that gives the smallest MSE on the training set.\\
+Tenfold cross validation has been used to find the MSE as a function of components as seen on code listing \ref{lst:MSE_PCR} showing the implementation for PCR. A similar implementation has been used for PLS. The cross validation has been done for 10 components, as PCA shows an explained variance of over 90\% with a flattened curve beyond 10 components, as seen on figure \ref{fig:PCA_hitters_dataset}.\\
+The results for PCR can be seen on figure \ref{fig:MSE_PCR}, where six principal components gives the lowest MSE. For PLS the lowest MSE value is achieved using only two components.
+Applying PCR with seven components on the test set gives a MSE of 114098.06, while applying PLS with two components on the test set gives a MSE of 104838.51. Thus for the data set used in this example PLS clearly performs better with both a lower component count and a lower MSE value on the test set.
+
+\begin{lstlisting}[language=Python, caption=Code snippet showing tenfold cross validation of PCR]
+def subset_Process(predictor, X, y):	
+	# Scale the data
+	pca = PCA()
+	X_reduced = pca.fit_transform(scale(X_train))	
+	# Setup folds and linear regression
+	mse = []
+	regr = linear_model.LinearRegression()
+	kf_10 = KFold(n_splits=10, shuffle=True, random_state=1)
+	# Single CV to get MSE for the intercept
+	score = cross_val_score(regr, np.ones((len(X_reduced),1)), y.ravel(), cv=kf_10, scoring='neg_mean_squared_error').mean()    
+	mse.append(-score)
+	# CV for pc principal components
+	for i in np.arange(1, pc):
+		score = cross_val_score(regr, X_reduced[:,:i], y, cv=kf_10, scoring='neg_mean_squared_error').mean()
+		mse.append(-score)
+	# Plot MSE as function of principal components after linear regression
+	....
+\end{lstlisting}\label{lst:MSE_PCR}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=7cm]{Img/PCA_hitters_dataset.PNG}
+	\caption{PCA on the dataset "Hitters"}
+	\label{fig:PCA_hitters_dataset}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=7cm]{Img/MSE_PCR.PNG}
+	\caption{MSE as a function of components in PCR}
+	\label{fig:MSE_PCR}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=7cm]{Img/MSE_PLS.PNG}
+	\caption{MSE as a function of components in PLS}
+	\label{fig:MSE_PLS}
+\end{figure} 
